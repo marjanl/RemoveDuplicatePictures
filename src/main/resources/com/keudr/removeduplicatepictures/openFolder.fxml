@@ -8,6 +8,6 @@
    <children>
       <Label layoutX="58.0" layoutY="38.0" text="Select folder for processing" />
       <Button fx:id="openFolders" layoutX="232.0" layoutY="34.0" mnemonicParsing="false" onAction="#openFolder" text="..." />
-      <Button layoutX="232.0" layoutY="79.0" mnemonicParsing="false" text="Process folder" onAction="#processFolder" />
+      <Button fx:id="btnProcess" layoutX="232.0" layoutY="79.0" mnemonicParsing="false" text="Process folder" onAction="#processFolder" />
    </children>
 </AnchorPane>

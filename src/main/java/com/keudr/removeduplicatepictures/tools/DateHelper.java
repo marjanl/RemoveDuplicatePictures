@@ -30,6 +30,7 @@ public class DateHelper {
     }
 
     public static String formatDate(Date d){
+        if(d == null) return null;
         return sdf.format(d);
     }
 }

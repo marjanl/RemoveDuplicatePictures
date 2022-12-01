@@ -62,11 +62,14 @@ public class PicInfo {
     }
 
     public ImageView getImage() {
-        System.out.println("delam getImage:"+filePath);
-        Image image = new Image(new File(filePath).toURI().toString(), 200,200,true, false);
-        System.out.println("dobil image");
-        ImageView imageView = new ImageView(image);
-        return imageView;
+        try {
+            Image image = new Image(new File(filePath).toURI().toString(), 200, 200, true, false);
+            ImageView imageView = new ImageView(image);
+            return imageView;
+        }catch (Exception e){
+            System.out.println("ex loadming image:"+e.getLocalizedMessage());
+        }
+        return null;
     }
 
     public String getFileCreatedFormated() {

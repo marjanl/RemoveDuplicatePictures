@@ -1,6 +1,9 @@
 package com.keudr.removeduplicatepictures;
 
 import com.keudr.removeduplicatepictures.tools.ImageReader;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.common.RationalNumber;
@@ -41,6 +44,10 @@ public class ProcessFolder {
     }
 
     public void process() throws IOException, SQLException {
+
+        conn.createStatement().executeUpdate( "truncate pic_file" );
+        conn.createStatement().executeUpdate( "truncate failed_pic" );
+
         if (!dirToProcess.isDirectory()) throw new RuntimeException("Not a valid directory");
         System.out.println("started "+new java.util.Date());
         try (Stream<Path> walk = Files.walk(dirToProcess.toPath())) {

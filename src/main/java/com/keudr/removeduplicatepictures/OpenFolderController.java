@@ -16,11 +16,11 @@ public class OpenFolderController{
     private Button openFolders;
     File selectedDirectory;
     Alert alert = new Alert(Alert.AlertType.NONE);
-
+    Stage stage;
     @FXML
     void openFolder(ActionEvent event) {
 
-        Stage stage = (Stage) openFolders.getScene().getWindow();
+        stage = (Stage) openFolders.getScene().getWindow();
 
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Open folder");
@@ -48,6 +48,7 @@ public class OpenFolderController{
             try {
                 ProcessFolder processFolder = new ProcessFolder(selectedDirectory);
                 processFolder.process();
+                stage.close();
             } catch (IOException e) {
                 alert.setAlertType(Alert.AlertType.ERROR);
                 alert.setTitle("Error while procesing folder " + selectedDirectory.getAbsolutePath());
