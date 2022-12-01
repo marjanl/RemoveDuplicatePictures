@@ -72,21 +72,20 @@ public class PicInfoController implements Initializable {
             GroupedPic selectedGroupedRow = obs.getValue();
             setSubTableValues(selectedGroupedRow);
         });
+        refresh();
+    }
+
+    public void refreshTable(ActionEvent event) {
+        refresh();
+    }
+
+    public void refresh(){
         try {
             groupByHashTable.setItems(FXCollections.observableArrayList(picFileDb.getGroupByData()));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         lblCount.setText("found " + groupByHashTable.getItems().size() + " records");
-
-    }
-
-    public void refreshTable(ActionEvent event) {
-        try {
-            groupByHashTable.setItems(FXCollections.observableArrayList(picFileDb.getGroupByData()));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 

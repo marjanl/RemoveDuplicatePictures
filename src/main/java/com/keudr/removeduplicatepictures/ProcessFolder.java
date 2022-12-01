@@ -1,5 +1,6 @@
 package com.keudr.removeduplicatepictures;
 
+import com.keudr.removeduplicatepictures.db.PicFileDb;
 import com.keudr.removeduplicatepictures.tools.ImageReader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -28,26 +29,24 @@ import static org.apache.commons.imaging.Imaging.getMetadata;
 public class ProcessFolder {
 
     final File dirToProcess;
-    Connection conn;
     ImageReader imageReader;
     PreparedStatement ps, failedPs;
     int counter = 0;
+    PicFileDb picFileDb;
 
     public ProcessFolder(File dir) throws SQLException {
+        picFileDb=new PicFileDb();
         dirToProcess=dir;
-        conn = ApplicationStart.conn;
         imageReader = new ImageReader();
-        ps = conn.prepareStatement("insert into pic_file(id,file_path, file_name, md5_hash, file_date, pic_date, pic_original_date)" +
+        ps = picFileDb.conn.prepareStatement("insert into pic_file(id,file_path, file_name, md5_hash, file_date, pic_date, pic_original_date)" +
                 " values (nextval('pic_file_id_seq'), ?, ?, ?, ?, ?, ?)");
-        failedPs = conn.prepareStatement("insert into failed_pic(file_path, ex_msg)" +
+        failedPs = picFileDb.conn.prepareStatement("insert into failed_pic(file_path, ex_msg)" +
                 " values (?, ?)");
     }
 
     public void process() throws IOException, SQLException {
-
-        conn.createStatement().executeUpdate( "truncate pic_file" );
-        conn.createStatement().executeUpdate( "truncate failed_pic" );
-
+        picFileDb.conn.createStatement().executeUpdate( "truncate pic_file" );
+        picFileDb.conn.createStatement().executeUpdate( "truncate failed_pic" );
         if (!dirToProcess.isDirectory()) throw new RuntimeException("Not a valid directory");
         System.out.println("started "+new java.util.Date());
         try (Stream<Path> walk = Files.walk(dirToProcess.toPath())) {

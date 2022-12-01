@@ -11,7 +11,7 @@ import java.util.List;
 public class PicFileDb {
 
 
-    private final Connection conn;
+    public final Connection conn;
     PreparedStatement ps,psDelete, psGroupBy;
     ObservableList<PicInfo> data = FXCollections.observableArrayList();
     ObservableList<GroupedPic> dataGroupBy = FXCollections.observableArrayList();
