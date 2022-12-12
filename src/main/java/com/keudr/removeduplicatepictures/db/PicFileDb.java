@@ -17,8 +17,27 @@ public class PicFileDb {
     ObservableList<GroupedPic> dataGroupBy = FXCollections.observableArrayList();
 
     public PicFileDb() throws SQLException {
-        conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/pic_db",
-                    "", "");
+        conn = DriverManager.getConnection("jdbc:sqlite:pic.db");
+        if (conn != null) {
+            DatabaseMetaData meta = conn.getMetaData();
+
+            conn.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS  failed_pic (\n" +
+                    "\tid INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                    "\tfile_path text NULL,\n" +
+                    "\tex_msg text NULL\n" +
+                    ");");
+            conn.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS  pic_file (\n" +
+                    "\tid INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                    "\tfile_path text NULL,\n" +
+                    "\tfile_name text NULL,\n" +
+                    "\tmd5_hash text NULL,\n" +
+                    "\tfile_date DATETIME NULL,\n" +
+                    "\tpic_date DATETIME NULL,\n" +
+                    "\tpic_original_date DATETIME NULL\n" +
+                    ");");
+            System.out.println("Tables were created.");
+
+        }
         ps=conn.prepareStatement("select * from pic_file pf where md5_hash = ? order by file_path ");
         psDelete=conn.prepareStatement("delete from pic_file where file_path=?");
         psGroupBy=conn.prepareStatement("select md5_hash , count(*) as c, min(file_name) from pic_file pf group by md5_hash  having count(*) > 1 ");

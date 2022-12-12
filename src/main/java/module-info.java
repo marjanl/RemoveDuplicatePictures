@@ -7,6 +7,7 @@ module com.keudr.removeduplicatepictures {
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
     requires org.postgresql.jdbc;
+    requires org.xerial.sqlitejdbc;
     requires org.apache.commons.imaging;
 
     opens com.keudr.removeduplicatepictures to javafx.fxml;

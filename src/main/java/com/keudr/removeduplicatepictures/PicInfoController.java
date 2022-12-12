@@ -128,6 +128,7 @@ public class PicInfoController implements Initializable {
             if (f.exists()) {
                 f.delete();
             }
+            groupByHashTable.requestFocus();
             return p;
         }));
 
@@ -140,8 +141,6 @@ public class PicInfoController implements Initializable {
 
     @FXML
     private void openProcessFolder(ActionEvent event) {
-        event.consume();
-        System.out.println("Hello, World!");
         try {
             Stage stage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationStart.class.getResource("openFolder.fxml"));

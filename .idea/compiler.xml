@@ -9,8 +9,8 @@
         <module name="RemoveDuplicatePictures" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="RemoveDuplicatePictures" target="11" />
+    <bytecodeTargetLevel target="17">
+      <module name="RemoveDuplicatePictures" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
